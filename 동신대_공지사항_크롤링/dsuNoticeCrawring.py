@@ -15,7 +15,7 @@ browser.get(url=URL)
 browser.implicitly_wait(time_to_wait=10) # 로딩 끝날 때 까지 10초정도 기다림
 
 # csv 파일 생성
-file = open(r'/Users/user/Desktop/vscode 프로젝트/VSCODE 파이썬/동신대_공지사항_크롤링/notice.csv', 'w', encoding='UTF-8-sig', newline='')
+file = open(r'/Users/user/Desktop/vscode 프로젝트/VSCODE 파이썬/동신대_공지사항_크롤링/notice.csv', 'w', encoding='CP949', newline='')
 csvWriter = csv.writer(file)
 csvWriter.writerow(['등록일', '제목', '링크'])
 
@@ -31,6 +31,14 @@ while True:
         noticeWriteDate = notice.find_element(By.CSS_SELECTOR, '#contents > div.board-wrap > table > tbody > tr > td.f-date.date > p').text
         noticeName = notice.find_element(By.CSS_SELECTOR, '#contents > div.board-wrap > table > tbody > tr > td.f-tit.subject > p > a > span').text
         noticeLink = notice.find_element(By.CSS_SELECTOR, '#contents > div.board-wrap > table > tbody > tr > td.f-tit.subject > p > a').get_attribute('href')
+        
+        # Encode the title in cp949 and handle any errors that might occur
+        try:
+            noticeName = noticeName.encode('cp949', 'ignore').decode('cp949')
+        except:
+            noticeName = noticeName.encode('utf-8', 'ignore').decode('utf-8-sig')
+
+
         csvWriter.writerow([noticeWriteDate, noticeName, noticeLink])
         noticeDate_dt = datetime.strptime(noticeWriteDate, '%Y-%m-%d')
 
