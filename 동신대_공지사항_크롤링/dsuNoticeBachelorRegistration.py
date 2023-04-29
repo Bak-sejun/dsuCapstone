@@ -1,3 +1,5 @@
+# 동신대 공지사항 학사/등록 크롤링
+
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -10,12 +12,12 @@ from datetime import datetime
 browser = webdriver.Chrome(ChromeDriverManager().install())
 
 # 웹사이트 열기
-URL = 'https://www.dsu.ac.kr/kr/index.php?pCode=notice'
+URL = 'https://www.dsu.ac.kr/kr/index.php?pCode=notiuniv'
 browser.get(url=URL)
 browser.implicitly_wait(time_to_wait=10) # 로딩 끝날 때 까지 10초정도 기다림
 
 # csv 파일 생성
-file = open(r'/Users/user/Desktop/vscode 프로젝트/VSCODE 파이썬/동신대_공지사항_크롤링/notice.csv', 'w', encoding='CP949', newline='')
+file = open(r'/Users/user/Desktop/vscode 프로젝트/VSCODE 파이썬/동신대_공지사항_크롤링/BachelorRegistrationNotice.csv', 'w', encoding='CP949', newline='')
 csvWriter = csv.writer(file)
 csvWriter.writerow(['등록일', '제목', '링크'])
 
@@ -58,4 +60,4 @@ while True:
 
 
 file.close()
-print('동신대 공지사항 크롤링 종료')
+print('동신대 학사등록 공지사항 크롤링 종료')
